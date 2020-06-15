@@ -1,0 +1,15 @@
+﻿@model Upload
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("CharacterSheet", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+       {
+        <input type="file" name="file" />
+        <input type="submit" value="OK" />
+       }
+    </div>
+</div>

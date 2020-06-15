@@ -1,0 +1,313 @@
+﻿@model Character
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    @@page {
+        size: 8.5in 11in;
+        margin: 0cm;
+    }
+    #page {
+        width: 10in;
+        height: 13.5in;
+        margin: 0 0 0 0;
+        padding: 0;
+        background-image: url(https://voh-dev.s3-us-west-2.amazonaws.com/DDALRoD_CharacterSheet-1.jpg);
+        background-size: 10in 13in;
+        background-repeat: no-repeat;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .oval {
+        width: 80px;
+        height: 20px;
+        border-radius: 50%;
+    }
+    .circle {
+
+        border: 2px solid black;
+        height: 40px;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        width: 100px;
+    }
+    .dotContainer {
+        margin-left: 9px;
+        margin-right: -7px;
+    }
+    .dot {
+        height: 12px;
+        width: 12px;
+        background-color: #bbb;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .emptydot {
+        height: 12px;
+        width: 12px;
+        border: 1px solid black;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<div class="container" id="page" style="position: relative;">
+    @*Base Info*@
+    <div style="position: absolute; top:130px; left: 105px; font-size: 1.2em;">@Model.Name</div>
+
+    <div style="position: absolute; top:87px; left: 323px; font-size: .8em;">Temp Class</div>
+    <div style="position: absolute; top:130px; left: 323px; font-size: .8em;">@Model.Race</div>
+
+    <div style="position: absolute; top:87px; left: 460px; font-size: .8em;">@Model.Details.Background</div>
+    <div style="position: absolute; top:130px; left: 460px; font-size: .8em;">@Model.Details.Alignment.ToString()</div>
+
+    <div style="position: absolute; top:87px; left: 615px; font-size: .8em;">Temp Player Name</div>
+    <div style="position: absolute; top:130px; left: 615px; font-size: .8em;">Blank...</div>
+
+    <div style="position: absolute; top:87px; left: 785px; font-size: .8em;">Temp Faction</div>
+    <div style="position: absolute; top:130px; left: 785px; font-size: .8em;"></div>
+
+
+
+    @*ABility Scores*@
+
+    @*Stregth*@
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str).Bonus < 0)
+    {
+        <div style="position: absolute; top:251px; left: 75px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str).Bonus</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:251px; left: 87px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str).Bonus</div>
+    }
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str).Value < 10)
+    {
+        <div style="position: absolute; top:292px; left: 87px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str).Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:292px; left: 82px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str).Value</div>
+    }
+
+    @*Dex*@
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex).Bonus < 0)
+    {
+        <div style="position: absolute; top:358px; left: 75px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex).Bonus</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:358px; left: 84px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex).Bonus</div>
+    }
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex).Value < 10)
+    {
+        <div style="position: absolute; top:406px; left: 87px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex).Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:406px; left: 82px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex).Value</div>
+    }
+
+    @*Con*@
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con).Bonus < 0)
+    {
+        <div style="position: absolute; top: 470px; left: 75px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con).Bonus</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:470px; left: 87px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con).Bonus</div>
+    }
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con).Value < 10)
+    {
+        <div style="position: absolute; top:516px; left: 87px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con).Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:516px; left: 82px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con).Value</div>
+    }
+
+    @*Int*@
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int).Bonus < 0)
+    {
+        <div style="position: absolute; top:584px; left: 75px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int).Bonus</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:584px; left: 87px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int).Bonus</div>
+    }
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int).Value < 10)
+    {
+        <div style="position: absolute; top:628px; left: 87px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int).Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:628px; left: 82px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int).Value</div>
+    }
+
+    @*Wis*@
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis).Bonus < 0)
+    {
+        <div style="position: absolute; top: 696px; left: 75px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis).Bonus</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:696px; left: 87px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis).Bonus</div>
+    }
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis).Value < 10)
+    {
+        <div style="position: absolute; top:740px; left: 87px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis).Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:740px; left: 82px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis).Value</div>
+    }
+
+    @*Cha*@
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha).Bonus < 0)
+    {
+        <div style="position: absolute; top:810px; left: 75px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha).Bonus</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:810px; left: 82px; font-size: 1.6em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha).Bonus</div>
+    }
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha).Value < 10)
+    {
+        <div style="position: absolute; top:854px; left: 87px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha).Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:854px; left: 82px;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha).Value</div>
+    }
+
+
+    @*Inpiration*@
+    @if (Model.Details.Inspiration)
+    {<div style="position: absolute; top:200px; left: 163px; font-size: 1.6em">X</div>}
+    <div style="position: absolute; top:260px; left: 163px; font-size: 1.6em">@Model.Details.ProficencyBonus</div>
+
+    @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.SaveProf != 0)
+    {<div class="dot" style="position: absolute; top:334px; left: 164px;"></div>}
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.Save < 0)
+    {
+        <div style="position: absolute; top:318px; left: 180px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.Save</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:318px; left: 187px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.Save</div>
+    }
+
+    @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.SaveProf != 0)
+    {<div class="dot" style="position: absolute; top:354px; left: 164px;"></div>}
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.Save < 0)
+    {
+        <div style="position: absolute; top:339px; left: 180px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.Save</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:339px; left: 187px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.Save</div>
+    }
+
+    @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.SaveProf != 0)
+    {<div class="dot" style="position: absolute; top:376px; left: 164px;"></div>}
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.Save < 0)
+    {
+        <div style="position: absolute; top:360px; left: 180px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.Save</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:360px; left: 187px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.Save</div>
+    }
+
+
+    @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.SaveProf != 0)
+    {<div class="dot" style="position: absolute; top:397px; left: 164px;"></div>}
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.Save < 0)
+    {
+        <div style="position: absolute; top:382px; left: 180px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.Save</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:382px; left: 187px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.Save</div>
+    }
+
+    @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.SaveProf != 0)
+    {<div class="dot" style="position: absolute; top:418px; left: 164px;"></div>}
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save < 0)
+    {
+        <div style="position: absolute; top:403px; left: 180px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:403px; left: 187px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save</div>
+    }
+
+    @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.SaveProf != 0)
+    {<div class="dot" style="position: absolute; top:439px; left: 164px;"></div>}
+    @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save < 0)
+    {
+        <div style="position: absolute; top:424px; left: 180px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:424px; left: 187px; font-size: 1em">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save</div>
+    }
+
+
+    @*Skills*@
+    @if (Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "acrobatics")?.ProfBonus == 0)
+    {<div class="dot" style="position: absolute; top:514px; left: 164px;"></div>}
+    @if (Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "acrobatics")?.Value < 0)
+    {
+        <div style="position: absolute; top:500px; left: 180px; font-size: 1em">@Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "acrobatics")?.Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:500px; left: 187px; font-size: 1em">@Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "acrobatics")?.Value</div>
+    }
+
+    @if (Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "animal handling")?.ProfBonus == 0)
+    {<div class="dot" style="position: absolute; top:535px; left: 164px;"></div>}
+    @if (Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "animal handling")?.Value < 0)
+    {
+        <div style="position: absolute; top:521px; left: 180px; font-size: 1em">@Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "animal handling")?.Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:521px; left: 187px; font-size: 1em">@Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "animal handling")?.Value</div>
+    }
+
+    @if (Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "arcana")?.ProfBonus == 0)
+    {<div class="dot" style="position: absolute; top:556px; left: 164px;"></div>}
+    @if (Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "arcana")?.Value < 0)
+    {
+        <div style="position: absolute; top:542px; left: 180px; font-size: 1em">@Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "arcana")?.Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:542px; left: 187px; font-size: 1em">@Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "arcana")?.Value</div>
+    }
+
+
+    @if (Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "athletics")?.ProfBonus == 0)
+    {<div class="dot" style="position: absolute; top:577px; left: 164px;"></div>}
+    @if (Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "athletics")?.Value < 0)
+    {
+        <div style="position: absolute; top:563px; left: 180px; font-size: 1em">@Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "athletics")?.Value</div>
+    }
+    else
+    {
+        <div style="position: absolute; top:563px; left: 187px; font-size: 1em">@Model.Skills.FirstOrDefault(x => x.Name.ToLower() == "athletics")?.Value</div>
+    }
+</div>
+
+

@@ -1,0 +1,485 @@
+﻿@model Character
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    #page {
+        width: 8in;
+        height: 11in;
+        margin:0;
+        padding:0;    
+    }
+    .oval {
+        width: 80px;
+        height: 20px;
+        border-radius: 50%;
+    }
+    .circle {
+
+        border: 2px solid black;
+        height: 40px;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        width: 100px;
+    }
+    .dotContainer {
+        margin-left: 9px;
+        margin-right: -7px;
+    }
+    .dot {
+        height: 12px;
+        width: 12px;
+        background-color: #bbb;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .emptydot {
+        height: 12px;
+        width: 12px;
+        border: 1px solid black;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<div class="container" id="page">
+    <div class="row">
+        <div class="col-3 border">
+            <div class="row">
+                <img src="https://via.placeholder.com/175x75?text=D&D+Logo" />
+            </div>
+            <div class="row" style="height: 35px; border-bottom: 1px solid black;">
+                <span style="width: 100%; text-align:center;">@Model.Name</span>
+            </div>
+            <div class="row" style="height: 20px; font-size:small">
+                <span style="width: 100%; text-align:right;">Character Name</span>
+            </div>
+        </div>
+        <div class="col-9 border">
+            <div class="row" style="height: 35px; border-bottom: 1px solid gray; font-size:smaller;">
+                <div class="col-3" style="position: relative;"><span style="position: absolute; bottom: 0;">@Model.Details.CharacterLevel</span></div>
+                <div class="col-3" style="position: relative;"><span style="position: absolute; bottom: 0;">@Model.Details.Background</span></div>
+                <div class="col-3" style="position: relative;"><span style="position: absolute; bottom: 0;">@Model.PlayerName</span></div>
+                <div class="col-3" style="position: relative;"></div>
+            </div>
+            <div class="row" style="height: 20px; font-size: .7em">
+                <div class="col-3">Class & Level</div>
+                <div class="col-3">Background</div>
+                <div class="col-3">Player Name</div>
+                <div class="col-3">Faction</div>
+            </div>
+            <div class="row" style=" height: 35px; border-bottom: 1px solid gray; font-size: smaller ">
+                <div class="col-3" style="position: relative;"><span style="position: absolute; bottom: 0;">@Model.Race</span></div>
+                <div class="col-3" style="position: relative;"><span style="position: absolute; bottom: 0;">@Model.Details.Alignment</span></div>
+                <div class="col-3" style="position: relative;"><span style="position: absolute; bottom: 0;">@Model.Details.ExperincePoints</span></div>
+                <div class="col-3" style="position: relative;"></div>
+            </div>
+            <div class="row" style="height: 20px; font-size:.7em">
+            <div class="col-3">Race</div>
+            <div class="col-3">Alignment</div>
+            <div class="col-3">Experince Points</div>
+            <div class="col-3">DCI Number</div>
+        </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 border">
+            <div class="row">
+                <div class="col-4" style="background-color: #D3D3D3;">
+                    <div class="row" style="height: 100px;">
+                        <div class="col-10 offset-1" style="background-color: white; height:80px; margin-top:7px;">
+                            <div class="row">
+                                <span style="font-weight:bold; font-size:.7em; text-align:center; width:100%">Strength</span>
+                            </div>
+                            <div class="row" style="height: 50px;">
+                                <span style="font-size:2em; text-align: center; width:100%;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.Bonus</span>
+                            </div>
+                            <div class="row">
+                                <span class="oval" style="background-color:white; border: 2px solid black; text-align: center; width: 60%; display: table; margin: 0 auto;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.Value</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border" style="height: 100px;">
+                        <div class="col-10 offset-1" style="background-color: white; height:80px; margin-top:7px;">
+                            <div class="row">
+                                <span style="font-weight:bold; font-size:.7em; text-align:center; width:100%">Dexterity</span>
+                            </div>
+                            <div class="row" style="height: 50px;">
+                                <span style="font-size:2em; text-align: center; width:100%;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.Bonus</span>
+                            </div>
+                            <div class="row">
+                                <span class="oval" style="background-color:white; border: 2px solid black; text-align: center; width: 60%; display: table; margin: 0 auto;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.Value</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border" style="height: 100px;">
+                        <div class="col-10 offset-1" style="background-color: white; height:80px; margin-top:7px;">
+                            <div class="row">
+                                <span style="font-weight:bold;  font-size:.7em; text-align:center; width:100%">Constitution</span>
+                            </div>
+                            <div class="row" style="height: 50px;">
+                                <span style="font-size:2em; text-align: center; width:100%;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.Bonus</span>
+                            </div>
+                            <div class="row">
+                                <span class="oval" style="background-color:white; border: 2px solid black; text-align: center; width: 60%; display: table; margin: 0 auto;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.Value</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border" style="height: 100px;">
+                        <div class="col-10 offset-1" style="background-color: white; height:80px; margin-top:7px;">
+                            <div class="row">
+                                <span style="font-weight:bold; font-size:.7em; text-align:center; width:100%">Intelligence</span>
+                            </div>
+                            <div class="row" style="height: 50px;">
+                                <span style="font-size:2em; text-align: center; width:100%;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.Bonus</span>
+                            </div>
+                            <div class="row">
+                                <span class="oval" style="background-color:white; border: 2px solid black; text-align: center; width: 60%; display: table; margin: 0 auto;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.Value</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border" style="height: 100px;">
+                        <div class="col-10 offset-1" style="background-color: white; height:80px; margin-top:7px;">
+                            <div class="row">
+                                <span style="font-weight:bold; font-size:.7em; text-align:center; width:100%">Wisdom</span>
+                            </div>
+                            <div class="row" style="height: 50px;">
+                                <span style="font-size:2em; text-align: center; width:100%;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Bonus</span>
+                            </div>
+                            <div class="row">
+                                <span class="oval" style="background-color:white; border: 2px solid black; text-align: center; width: 60%; display: table; margin: 0 auto;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Value</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border" style="height: 100px;">
+                        <div class="col-10 offset-1" style="background-color: white; height:80px; margin-top:7px;">
+                            <div class="row">
+                                <span style="font-weight:bold; font-size:.7em; text-align:center; width:100%">Charisma</span>
+                            </div>
+                            <div class="row" style="height: 50px;">
+                                <span style="font-size:2em; text-align: center; width:100%;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha)?.Bonus</span>
+                            </div>
+                            <div class="row">
+                                <span class="oval" style="background-color:white; border: 2px solid black; text-align: center; width: 60%; display: table; margin: 0 auto;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha)?.Value</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8" style="padding-left:6px; padding-right: 16px;">
+                    <div class="row" style="height:40px; margin-left:0px; margin-top: 10px;">
+                        <div class="col-3" style=" border: 2px solid black;">
+                            @if(Model.Details.Inspiration ) { <span>X</span>}
+                        </div>
+                        <div class="col-9">
+                            <div class="row" style="margin-top:7px; text-align:center; border: 2px solid black;"><center style="font-weight:bold; font-size:.9em; margin:0 auto">Inspiration</center></div>
+                        </div>
+                    </div>
+                    <div class="row" style="height:40px; margin-left:0px; margin-top: 10px;">
+                        <div class="row" style="height:40px; margin-left:0px;">
+                            <div class="col-3 circle" style="">
+                                @Model.Details.ProficencyBonus
+                            </div>
+                            <div class="col-8">
+                                <div class="row" style="margin-top:5px; margin-left:-22px; height:30px; text-align:center; border: 2px solid black;"><center style="font-weight:bold; font-size:.75em; margin:0 auto">Proficency Bonus</center></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border" style="margin-top:10px; margin-left:0; margin-right:-10px;">
+                        @*Strength*@
+                        <div class="row">
+                            <div class="col-1 dotContainer" style="">
+                                @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.SaveProf != 0)
+                                {<div class="dot"></div> }
+                                else
+                                { <div class="emptydot"></div>}
+                            </div>
+                            @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.Save < 0)
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;"><span style="margin-left:-6px;">@(Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.Save)</span></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Str)?.Save</div>
+                            }
+                            <div class="col-7" style="font-size: .8em; margin-left: 0; line-height: 25px; padding-left: 4px; padding-right: 26px; min-width:100px;">Strength</div>
+                        </div>
+                        @*Dexterity*@
+                        <div class="row">
+                            <div class="col-1 dotContainer" style="">
+                                @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.SaveProf != 0)
+                                {<div class="dot"></div> }
+                                else
+                                { <div class="emptydot"></div>}
+                            </div>
+                            @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.Save < 0)
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;"><span style="margin-left:-6px;">@(Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.Save)</span></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Dex)?.Save</div>
+                            }
+                            <div class="col-7" style="font-size: .8em; margin-left: 0; line-height: 25px; padding-left: 4px; padding-right: 26px; min-width:100px;">Dexterity</div>
+                        </div>
+                        @*Constitution*@
+                        <div class="row">
+                            <div class="col-1 dotContainer" style="">
+                                @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.SaveProf != 0)
+                                {<div class="dot"></div> }
+                                else
+                                { <div class="emptydot"></div>}
+                            </div>
+                            @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.Save < 0)
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;"><span style="margin-left:-6px;">@(Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.Save)</span></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Con)?.Save</div>
+                            }
+                            <div class="col-7" style="font-size: .8em; margin-left: 0; line-height: 25px; padding-left: 4px; padding-right: 26px; min-width:100px;">Constitution</div>
+                        </div>
+                        @*Intelligence*@
+                        <div class="row">
+                            <div class="col-1 dotContainer" style="">
+                                @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.SaveProf != 0)
+                                {<div class="dot"></div> }
+                                else
+                                { <div class="emptydot"></div>}
+                            </div>
+                            @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.Save < 0)
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;"><span style="margin-left:-6px;">@(Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.Save)</span></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Int)?.Save</div>
+                            }
+                        <div class="col-7" style="font-size: .8em; margin-left: 0; line-height: 25px; padding-left: 4px; padding-right: 26px; min-width:100px;">Intelligence</div>
+                        </div>
+                        @*Wisdom*@
+                        <div class="row">
+                            <div class="col-1 dotContainer" style="">
+                                @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.SaveProf != 0)
+                                {<div class="dot"></div> }
+                                else
+                                { <div class="emptydot"></div>}
+                            </div>
+                            @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save < 0)
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;"><span style="margin-left:-6px;">@(Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save)</span></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Wis)?.Save</div>
+                            }
+                            <div class="col-7" style="font-size: .8em; margin-left: 0; line-height: 25px; padding-left: 4px; padding-right: 26px; min-width:100px;">Wisdom</div>
+                        </div>
+                        @*Charisma*@
+                        <div class="row">
+                            <div class="col-1 dotContainer" style="">
+                                @if (Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha)?.SaveProf != 0)
+                                {<div class="dot"></div> }
+                                else
+                                { <div class="emptydot"></div>}
+                            </div>
+                            @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha)?.Save < 0)
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;"><span style="margin-left:-6px;">@(Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha)?.Save)</span></div>
+                            }
+                            else
+                            {
+                                <div class="col-1 text-center" style="border-bottom: 1px solid black;">@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha)?.Save</div>
+                            }
+                            <div class="col-7" style="font-size: .8em; margin-left: 0; line-height: 25px; padding-left: 4px; padding-right: 26px; width:114px;">Charisma</div>
+                        </div>
+                    </div>
+                    <div class="row border" style="margin-top:10px; margin-left:0; margin-right:-10px">
+                        @foreach (var skill in Model.Skills)
+                        { 
+                            <div class="row">
+                                <div class="col-1 dotContainer">
+                                    @if (skill.ProfBonus != 0)
+                                    {<div class="dot align-items-center"></div> }
+                                    else
+                                    { <div class="emptydot"></div>}
+                                </div>
+                                @if (@Model.AbilityScores.FirstOrDefault(x => x.Name == AbilityNames.Cha)?.Save < 0)
+                                {
+                                    <div class="col-1 text-center" style="border-bottom: 1px solid black;"><span style="margin-left:-6px;">@skill.Value</span></div>
+                                }
+                                else
+                                {
+                                    <div class="col-1 text-center" style="border-bottom: 1px solid black;">@skill.Value</div>
+                                }
+                                <div class="col-7" style="font-size: .7em; margin-left: 0; line-height: 25px; padding-left: 2px; padding-right: 2px; width:120px;">@skill.Name <span style="font-size: .6em;">(@skill.Ability.Name)</span></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 border">
+
+        </div>
+        <div class="col-4 border"></div>
+    </div>
+
+</div>
+
+<h1>Test 2</h1>
+<div class="row">
+    <table>
+        <tr>
+            <th>PlayerName</th>
+            <td>@Model.PlayerName</td>
+        <tr />
+        <tr>
+            <th>Name</th>
+            <td>@Model.Name</td>
+        <tr />
+        <tr>
+            <th>Race</th>
+            <td>@Model.Race</td>
+        <tr />
+        <tr>
+            <th>RuleSet</th>
+            <td>@Model.RuleSet.ToString()</td>
+        <tr />
+        <tr>
+            <th>Character level</th>
+            <td>@Model.Details.CharacterLevel</td>
+        <tr />
+        <tr>
+            <th>Inspiration</th>
+            <td>@Model.Details.Inspiration</td>
+        <tr />
+        <tr>
+            <th>Proficency Bonus</th>
+            <td>@Model.Details.ProficencyBonus</td>
+        <tr />
+        <tr>
+            <th>Armor Class</th>
+            <td>@Model.Details.ArmorClass</td>
+        <tr />
+        <tr>
+            <th>Initiative</th>
+            <td>@Model.Details.Initiative</td>
+        <tr />
+        <tr>
+            <th>Alignment</th>
+            <td>@Model.Details.Alignment.ToString()</td>
+        <tr />
+        <tr>
+            <th>Speed</th>
+            <td>@Model.Details.Speed</td>
+        <tr />
+        <tr>
+            <th>Appearance</th>
+            <td>@Model.Details.Appearance</td>
+        <tr />
+        <tr>
+            <th>Max Hit Points</th>
+            <td>@Model.Details.MaxHitPoints</td>
+        <tr />
+        <tr>
+            <th>Current Hit Points</th>
+            <td>@Model.Details.CurrentHitPoints</td>
+        <tr />
+        <tr>
+            <th>Temp Hit Points</th>
+            <td>@Model.Details.TempHitPoints</td>
+        <tr />
+        <tr>
+            <th>Death Save Successes</th>
+            <td>@Model.Details.DeathSaveSuccesses</td>
+        <tr />
+        <tr>
+            <th>Death Save Failures</th>
+            <td>@Model.Details.DeathSaveFailures</td>
+        <tr />
+        <tr>
+            <th>Total Hit Dice</th>
+            <td>@Model.Details.TotalHitDice</td>
+        <tr />
+        <tr>
+            <th>Current Hit Dice</th>
+            <td>@Model.Details.CurrentHitDice</td>
+        <tr />
+        <tr>
+            <th>Experince Points Needed</th>
+            <td>@Model.Details.ExperincePointsNeeded</td>
+        <tr />
+        <tr>
+            <th>Experince Points</th>
+            <td>@Model.Details.ExperincePoints</td>
+        <tr />
+        <tr>
+            <th colspan="2">Personality</th>
+        </tr>
+        <tr>
+            <th>Traits</th>
+            <td>@Model.Peronality.Traits</td>
+        <tr />
+        <tr>
+            <th>Bonds</th>
+            <td>@Model.Peronality.Bonds</td>
+        <tr />
+        <tr>
+            <th>Ideals</th>
+            <td>@Model.Peronality.Ideals</td>
+        <tr />
+        <tr>
+            <th>Flaws</th>
+            <td>@Model.Peronality.Flaws</td>
+        <tr />
+
+        @foreach (var abs in Model.AbilityScores)
+        {
+            @if (@abs.Name == AbilityNames.Custom)
+            {
+                <tr>
+                    <th colspan="2">@abs.CustomName</th>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <th colspan="2">@abs.Name.ToString()</th>
+                </tr>
+            }
+            <tr>
+                <th>Value</th>
+                <td>@abs.Value</td>
+            </tr>
+            <tr>
+                <th>Bonus</th>
+                <td>@abs.Bonus</td>
+            </tr>
+            <tr>
+                <th>Save</th>
+                <td>@abs.Save</td>
+            </tr>
+            <tr>
+                <th>Svae Modifier</th>
+                <td>@abs.SaveMod</td>
+            </tr>
+            <tr>
+                <th>Save Prof</th>
+                <td>@abs.SaveProf</td>
+            </tr>
+        }
+
+    </table>
+</div>
